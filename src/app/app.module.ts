@@ -1,3 +1,4 @@
+import { EmployeeService } from './services/employee.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -12,7 +13,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
    imports: [
       BrowserModule
    ],
-   providers: [],
+   providers: [EmployeeService],
    bootstrap: [
       AppComponent,
       EmployeeListComponent

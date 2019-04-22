@@ -1,3 +1,4 @@
+import { EmployeeService } from './../services/employee.service';
 import { EmployeeForList } from './../Models/EmployeeForList';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,32 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class EmployeeListComponent implements OnInit {
   employees: EmployeeForList[];
 
-  constructor() { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.employees = [];
-
-    const emp1: EmployeeForList = {
-      Id: 1,
-      Age: 10,
-      FirstName: 'John',
-      LastName: 'Doe',
-      Salary: 100,
-      TaxNumber: 12345,
-      WorkingPosition: 'Developer'
-    };
-
-    const emp2: EmployeeForList = {
-      Id: 2,
-      Age: 20,
-      FirstName: 'Edward',
-      LastName: 'Kovalsky',
-      Salary: 9100,
-      TaxNumber: 8987,
-      WorkingPosition: 'Ceo'
-    };
-
-    this.employees.push(emp1);
-    this.employees.push(emp2);
+    this.employees = this.employeeService.getEmployees();
   }
 }
