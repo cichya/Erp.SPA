@@ -1,3 +1,4 @@
+import { EmployeeForDetails } from './../Models/EmployeeForDetails';
 import { EmployeeForList } from './../Models/EmployeeForList';
 import { Injectable } from '@angular/core';
 
@@ -40,6 +41,22 @@ getEmployees(): EmployeeForList[] {
 
 deleteEmployee(id: number): any {
   this.employees = this.employees.filter(x => x.Id !== id);
+
+  return this.employees;
+}
+
+addEmployee(newEmployee: EmployeeForDetails) {
+  const emp: EmployeeForList = {
+    Id: newEmployee.Id,
+    Age: 10,
+    FirstName: newEmployee.FirstName,
+    LastName: newEmployee.LastName,
+    Salary: newEmployee.Salary,
+    TaxNumber: newEmployee.TaxNumber,
+    WorkingPosition: newEmployee.WorkingPosition
+  };
+
+  this.employees.push(emp);
 
   return this.employees;
 }
