@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NewEmployeeModalComponent } from './new-employee-modal/new-employee-modal.component';
+import { NewEmployeeModalComponent } from './Modals/new-employee-modal/new-employee-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 

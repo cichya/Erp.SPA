@@ -1,5 +1,5 @@
 import { EmployeeForDetails } from './../Models/EmployeeForDetails';
-import { NewEmployeeModalComponent } from './../new-employee-modal/new-employee-modal.component';
+import { NewEmployeeModalComponent } from './../Modals/new-employee-modal/new-employee-modal.component';
 import { EmployeeService } from './../services/employee.service';
 import { EmployeeForList } from './../Models/EmployeeForList';
 import { Component, OnInit } from '@angular/core';
