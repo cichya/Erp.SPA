@@ -15,4 +15,14 @@ export class EmployeeListComponent implements OnInit {
   ngOnInit() {
     this.employees = this.employeeService.getEmployees();
   }
+
+  deleteEmployee(id: number) {
+    // this.employeeService.deleteEmployee(id).subscribe((employees: EmployeeForList[]) => {
+    //   this.employees = employees;
+    // }, error => {
+    //   console.log(error);
+    // });
+
+    this.employees = this.employees.filter(x => x.Id !== id);
+  }
 }
