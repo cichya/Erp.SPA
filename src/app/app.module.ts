@@ -4,16 +4,22 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NewEmployeeModalComponent } from './new-employee-modal/new-employee-modal.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      EmployeeListComponent
+      EmployeeListComponent,
+      NewEmployeeModalComponent
    ],
    imports: [
-      BrowserModule
+      BrowserModule,
+      ModalModule.forRoot()
    ],
-   providers: [EmployeeService],
+   providers: [
+      EmployeeService
+   ],
    bootstrap: [
       AppComponent,
       EmployeeListComponent
