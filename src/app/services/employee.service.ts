@@ -5,11 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EmployeeService {
+  employees: EmployeeForList[];
 
 constructor() { }
 
 getEmployees(): EmployeeForList[] {
-  const employees: EmployeeForList[] = [];
+  this.employees = [];
 
   const emp1: EmployeeForList = {
     Id: 1,
@@ -31,10 +32,16 @@ getEmployees(): EmployeeForList[] {
     WorkingPosition: 'Ceo'
   };
 
-  employees.push(emp1);
-  employees.push(emp2);
+  this.employees.push(emp1);
+  this.employees.push(emp2);
 
-  return employees;
+  return this.employees;
+}
+
+deleteEmployee(id: number): any {
+  this.employees = this.employees.filter(x => x.Id !== id);
+
+  return this.employees;
 }
 
 }

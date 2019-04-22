@@ -9,6 +9,7 @@
         <th scope="col">Salary</th>
         <th scope="col">Working Position</th>
         <th scope="col">Tax Number</th>
+        <th scope="col">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,9 @@
         <td>{{ employee.Salary }}</td>
         <td>{{ employee.WorkingPosition }}</td>
         <td>{{ employee.TaxNumber }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteEmployee(employee.Id)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
