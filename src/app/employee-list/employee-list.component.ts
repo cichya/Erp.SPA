@@ -1,6 +1,9 @@
+import { EmployeeForDetails } from './../Models/EmployeeForDetails';
+import { NewEmployeeModalComponent } from './../new-employee-modal/new-employee-modal.component';
 import { EmployeeService } from './../services/employee.service';
 import { EmployeeForList } from './../Models/EmployeeForList';
 import { Component, OnInit } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,8 +12,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeeListComponent implements OnInit {
   employees: EmployeeForList[];
+  bsModalRef: BsModalRef;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this.employees = this.employeeService.getEmployees();
@@ -24,5 +28,28 @@ export class EmployeeListComponent implements OnInit {
     // });
 
     this.employees = this.employees.filter(x => x.Id !== id);
+  }
+
+  addNewEmployee() {
+    this.bsModalRef = this.modalService.show(NewEmployeeModalComponent);
+
+    this.bsModalRef.content.newEmployee.subscribe((newEmployee: EmployeeForDetails) => {
+      // this.employeeService.addEmployee(newEmployee)subscribe((employees: EmployeeForList[]) => {
+        //   this.employees = employees;
+        // }, error => {
+        //   console.log(error);
+        // });
+        const emp: EmployeeForList = {
+          Id: this.employees[this.employees.length - 1].Id + 1,
+          Age: 10,
+          FirstName: newEmployee.FirstName,
+          LastName: newEmployee.LastName,
+          Salary: newEmployee.Salary,
+          TaxNumber: newEmployee.TaxNumber,
+          WorkingPosition: newEmployee.WorkingPosition
+        };
+
+        this.employees.push(emp);
+    });
   }
 }

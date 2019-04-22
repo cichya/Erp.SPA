@@ -1,0 +1,90 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Add new employee</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="submitForm" (ngSubmit)="addNewEmployee()">
+  <div class="m-2 modal-body">
+    <div class="form-group row">
+      <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+        <div *ngIf="!!this.firstName?.invalid && (!!this.firstName?.dirty || !!this.firstName?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.firstName.errors?.required">
+            First Name is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control input-group-lg" id="lastName" formControlName="lastName" />
+        <div *ngIf="!!this.lastName?.invalid && (!!this.lastName?.dirty || !!this.lastName?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.lastName.errors?.required">
+            Last Name is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="birth" class="col-sm-3 col-form-label">Birth</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control input-group-lg" id="birth" formControlName="birth" bsDatepicker />
+        <div *ngIf="!!this.birth?.invalid && (!!this.birth?.dirty || !!this.birth?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.birth.errors?.required">
+            Birth Date is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="salary" class="col-sm-3 col-form-label">Salary</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control input-group-lg" id="salary" formControlName="salary" />
+        <div *ngIf="!!this.salary?.invalid && (!!this.salary?.dirty || !!this.salary?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.salary.errors?.required">
+            Salary is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="workingPosition" class="col-sm-3 col-form-label">Working Position</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control input-group-lg" id="workingPosition" formControlName="workingPosition" />
+        <div
+          *ngIf="!!this.workingPosition?.invalid && (!!this.workingPosition?.dirty || !!this.workingPosition?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.workingPosition.errors?.required">
+            Working Position is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="taxNumber" class="col-sm-3 col-form-label">Tax Number</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control input-group-lg" id="taxNumber" formControlName="taxNumber"  (keypress)="numberOnly($event)" />
+        <div *ngIf="!!this.taxNumber?.invalid && (!!this.taxNumber?.dirty || !!this.taxNumber?.touched)"
+          class="invalid-feedback d-block">
+          <div *ngIf="!!this.taxNumber.errors?.required">
+            Tax Number is required.
+          </div>
+          <div *ngIf="!!this.taxNumber.hasError('maxlength') || !!this.taxNumber.hasError('minlength')">
+            Wrong format.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancel</button>
+    <button type="button" class="btn btn-success" type="submit" [disabled]="this.submitForm.invalid">Add</button>
+  </div>
+</form>
