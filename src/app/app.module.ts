@@ -7,6 +7,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NewEmployeeModalComponent } from './new-employee-modal/new-employee-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
    declarations: [
@@ -18,7 +19,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
       BrowserModule,
       FormsModule,
       ReactiveFormsModule,
-      ModalModule.forRoot()
+      ModalModule.forRoot(),
+      BsDatepickerModule.forRoot()
    ],
    providers: [
       EmployeeService
