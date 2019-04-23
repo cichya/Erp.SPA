@@ -61,4 +61,20 @@ addEmployee(newEmployee: EmployeeForDetails) {
   return this.employees;
 }
 
+getEmployee(id: number) {
+  const emp: EmployeeForList = this.employees.find(x => x.Id === id);
+
+  const tmp: EmployeeForDetails = {
+    Id: emp.Id,
+    Birth: new Date(),
+    FirstName: emp.FirstName,
+    LastName: emp.LastName,
+    Salary: emp.Salary,
+    TaxNumber: emp.TaxNumber,
+    WorkingPosition: emp.WorkingPosition
+  };
+
+  return tmp;
+}
+
 }
