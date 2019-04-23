@@ -8,12 +8,16 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NewEmployeeModalComponent } from './Modals/new-employee-modal/new-employee-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { UnsavedContentModalComponent } from './Modals/unsaved-content-modal/unsaved-content-modal.component';
+import { ConfirmDeleteUserComponent } from './Modals/confirm-delete-user/confirm-delete-user.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       EmployeeListComponent,
-      NewEmployeeModalComponent
+      NewEmployeeModalComponent,
+      UnsavedContentModalComponent,
+      ConfirmDeleteUserComponent
    ],
    imports: [
       BrowserModule,
@@ -26,7 +30,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       EmployeeService
    ],
    entryComponents: [
-    NewEmployeeModalComponent
+      NewEmployeeModalComponent,
+      UnsavedContentModalComponent,
+      ConfirmDeleteUserComponent
    ],
    bootstrap: [
       AppComponent,
