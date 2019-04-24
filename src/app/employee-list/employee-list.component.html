@@ -11,7 +11,7 @@
       <div class="form-group row">
         <label for="taxNumberFilter" class="col-2 col-form-label">Tax Number</label>
         <div class="col-3">
-          <input type="text" class="form-control" id="taxNumberFilter" formControlName="taxNumberFilter" />
+          <input type="text" class="form-control" id="taxNumberFilter" formControlName="taxNumberFilter" (keypress)="numberOnly($event)" />
         </div>
       </div>
       <div class="form-group row">
