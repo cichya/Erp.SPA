@@ -54,19 +54,7 @@ deleteEmployee(id: number): any {
 }
 
 addEmployee(newEmployee: EmployeeForDetails) {
-  const emp: EmployeeForList = {
-    id: newEmployee.id,
-    age: 10,
-    firstName: newEmployee.firstName,
-    lastName: newEmployee.lastName,
-    salary: newEmployee.salary,
-    taxNumber: newEmployee.taxNumber,
-    workingPosition: newEmployee.workingPosition
-  };
-
-  this.employees.push(emp);
-
-  return this.employees;
+  return this.http.post(this.baseUrl + 'employees', newEmployee);
 }
 
 getEmployee(id: number) {
