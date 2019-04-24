@@ -1,59 +1,67 @@
+import { environment } from './../../environments/environment';
 import { EmployeeForDetails } from './../Models/EmployeeForDetails';
 import { EmployeeForList } from './../Models/EmployeeForList';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpParams, HttpClient } from '@angular/common/http';
+import { PaginatedData } from '../Models/pagination';
+import { FilterParams } from '../Models/FilterParams';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
+  baseUrl = environment.apiUrl;
   employees: EmployeeForList[];
 
-constructor() { }
+constructor(private http: HttpClient) { }
 
-getEmployees(): EmployeeForList[] {
-  this.employees = [];
+getEmployees(page?: number, itemsPerPage?: number, filterParams?: FilterParams): Observable<PaginatedData<EmployeeForList[]>> {
+  let params = new HttpParams();
 
-  const emp1: EmployeeForList = {
-    Id: 1,
-    Age: 10,
-    FirstName: 'John',
-    LastName: 'Doe',
-    Salary: 100,
-    TaxNumber: 12345,
-    WorkingPosition: 'Developer'
-  };
+  if (page != null && itemsPerPage != null) {
+    params = params.append('pageNumber', page.toString());
+    params = params.append('pageSize', itemsPerPage.toString());
+  }
 
-  const emp2: EmployeeForList = {
-    Id: 2,
-    Age: 20,
-    FirstName: 'Edward',
-    LastName: 'Kovalsky',
-    Salary: 9100,
-    TaxNumber: 8987,
-    WorkingPosition: 'Ceo'
-  };
+  if (filterParams != null) {
+    params = params.append('lastNameFilter', filterParams.lastNameFilter);
+    params = params.append('taxNumberFilter', filterParams.taxNumberFilter);
+    params = params.append('workingPositionFilter', filterParams.workingPositionFilter);
+  }
 
-  this.employees.push(emp1);
-  this.employees.push(emp2);
+  const paginatedData: PaginatedData<EmployeeForList[]> = new PaginatedData<EmployeeForList[]>();
 
-  return this.employees;
+  return this.http.get<EmployeeForList[]>(this.baseUrl + 'employees', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedData.result = response.body;
+
+          if (response.headers.get('Pagination') != null) {
+           paginatedData.pagination = JSON.parse(response.headers.get('Pagination'));
+         }
+
+          return paginatedData;
+        })
+      );
 }
 
 deleteEmployee(id: number): any {
-  this.employees = this.employees.filter(x => x.Id !== id);
+  this.employees = this.employees.filter(x => x.id !== id);
 
   return this.employees;
 }
 
 addEmployee(newEmployee: EmployeeForDetails) {
   const emp: EmployeeForList = {
-    Id: newEmployee.Id,
-    Age: 10,
-    FirstName: newEmployee.FirstName,
-    LastName: newEmployee.LastName,
-    Salary: newEmployee.Salary,
-    TaxNumber: newEmployee.TaxNumber,
-    WorkingPosition: newEmployee.WorkingPosition
+    id: newEmployee.id,
+    age: 10,
+    firstName: newEmployee.firstName,
+    lastName: newEmployee.lastName,
+    salary: newEmployee.salary,
+    taxNumber: newEmployee.taxNumber,
+    workingPosition: newEmployee.workingPosition
   };
 
   this.employees.push(emp);
@@ -62,16 +70,16 @@ addEmployee(newEmployee: EmployeeForDetails) {
 }
 
 getEmployee(id: number) {
-  const emp: EmployeeForList = this.employees.find(x => x.Id === id);
+  const emp: EmployeeForList = this.employees.find(x => x.id === id);
 
   const tmp: EmployeeForDetails = {
-    Id: emp.Id,
-    Birth: new Date(),
-    FirstName: emp.FirstName,
-    LastName: emp.LastName,
-    Salary: emp.Salary,
-    TaxNumber: emp.TaxNumber,
-    WorkingPosition: emp.WorkingPosition
+    id: emp.id,
+    birth: new Date(),
+    firstName: emp.firstName,
+    lastName: emp.lastName,
+    salary: emp.salary,
+    taxNumber: emp.taxNumber,
+    workingPosition: emp.workingPosition
   };
 
   return tmp;
