@@ -83,17 +83,15 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(id: number) {
-    // this.employeeService.deleteEmployee(id).subscribe((employees: EmployeeForList[]) => {
-    //   this.employees = employees;
-    // }, error => {
-    //   console.log(error);
-    // });
-
     this.bsModalRef = this.modalService.show(ConfirmDeleteUserComponent);
 
     this.bsModalRef.content.toDelete.subscribe((toDelete: boolean) => {
       if (toDelete) {
-        this.employees = this.employees.filter(x => x.id !== id);
+        this.employeeService.deleteEmployee(id).subscribe(() => {
+          this.employees.splice(this.employees.findIndex(x => x.id === id), 1);
+        }, error => {
+          console.log(error);
+        });
       }
     });
   }
