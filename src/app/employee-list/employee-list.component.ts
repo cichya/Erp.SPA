@@ -88,7 +88,7 @@ export class EmployeeListComponent implements OnInit {
     this.bsModalRef.content.toDelete.subscribe((toDelete: boolean) => {
       if (toDelete) {
         this.employeeService.deleteEmployee(id).subscribe(() => {
-          this.employees.splice(this.employees.findIndex(x => x.id === id), 1);
+          this.loadData();
         }, error => {
           console.log(error);
         });
@@ -109,7 +109,7 @@ export class EmployeeListComponent implements OnInit {
     this.bsModalRef.content.newEmployee.subscribe(
       (newEmployee: EmployeeForDetails) => {
         this.employeeService.addEmployee(newEmployee).subscribe((employee: EmployeeForList) => {
-          this.employees.push(employee);
+          this.loadData();
         }, error => {
           console.log(error);
         });
