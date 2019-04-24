@@ -18,6 +18,7 @@ export class NewEmployeeModalComponent implements OnInit {
   employeeId: number;
   employee: EmployeeForDetails;
   bsModalRefSecond: BsModalRef;
+  maxDate: Date;
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -29,7 +30,10 @@ export class NewEmployeeModalComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef,
               private fb: FormBuilder,
               private modalService: BsModalService,
-              private employeeService: EmployeeService) { }
+              private employeeService: EmployeeService) {
+                this.maxDate = new Date();
+                this.maxDate.setDate(this.maxDate.getDate() - 1);
+               }
 
   ngOnInit() {
     this.createRegisterForm();
