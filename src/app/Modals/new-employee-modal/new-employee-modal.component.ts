@@ -30,12 +30,12 @@ export class NewEmployeeModalComponent implements OnInit {
     this.createRegisterForm();
 
     if (this.isEdit) {
-      this.firstName.setValue(this.employee.FirstName);
-      this.lastName.setValue(this.employee.LastName);
-      this.birth.setValue(this.employee.Birth);
-      this.salary.setValue(this.employee.Salary);
-      this.workingPosition.setValue(this.employee.WorkingPosition);
-      this.taxNumber.setValue(this.employee.TaxNumber);
+      this.firstName.setValue(this.employee.firstName);
+      this.lastName.setValue(this.employee.lastName);
+      this.birth.setValue(this.employee.birth);
+      this.salary.setValue(this.employee.salary);
+      this.workingPosition.setValue(this.employee.workingPosition);
+      this.taxNumber.setValue(this.employee.taxNumber);
     }
   }
 
@@ -69,13 +69,13 @@ export class NewEmployeeModalComponent implements OnInit {
   submitAction() {
       if (this.submitForm.valid) {
         const newEmployee: EmployeeForDetails = {
-          Id: this.isEdit ? this.employee.Id : 0,
-          FirstName: this.submitForm.get('firstName').value,
-          LastName: this.submitForm.get('lastName').value,
-          Birth: this.submitForm.get('birth').value,
-          Salary: this.submitForm.get('salary').value,
-          WorkingPosition: this.submitForm.get('workingPosition').value,
-          TaxNumber: this.submitForm.get('taxNumber').value
+          id: this.isEdit ? this.employee.id : 0,
+          firstName: this.submitForm.get('firstName').value,
+          lastName: this.submitForm.get('lastName').value,
+          birth: this.submitForm.get('birth').value,
+          salary: this.submitForm.get('salary').value,
+          workingPosition: this.submitForm.get('workingPosition').value,
+          taxNumber: this.submitForm.get('taxNumber').value
         };
 
         if (this.isEdit) {

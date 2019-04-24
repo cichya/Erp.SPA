@@ -1,9 +1,9 @@
 export interface EmployeeForList {
-  Id: number;
-  FirstName: string;
-  LastName: string;
-  Age: number;
-  Salary: number;
-  WorkingPosition: string;
-  TaxNumber: number;
+  id: number;
+  firstName: string;
+  lastName: string;
+  age: number;
+  salary: number;
+  workingPosition: string;
+  taxNumber: number;
 }
