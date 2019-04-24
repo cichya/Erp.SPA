@@ -1,3 +1,4 @@
+import { EmployeeService } from './../../services/employee.service';
 import { EmployeeForDetails } from './../../Models/EmployeeForDetails';
 import { Component, OnInit, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
@@ -14,6 +15,7 @@ export class NewEmployeeModalComponent implements OnInit {
   @Output() editedEmployee = new EventEmitter<EmployeeForDetails>();
   submitForm: FormGroup;
   isEdit: boolean;
+  employeeId: number;
   employee: EmployeeForDetails;
   bsModalRefSecond: BsModalRef;
 
@@ -24,19 +26,32 @@ export class NewEmployeeModalComponent implements OnInit {
     }
   }
 
-  constructor(public bsModalRef: BsModalRef, private fb: FormBuilder, private modalService: BsModalService) { }
+  constructor(public bsModalRef: BsModalRef,
+              private fb: FormBuilder,
+              private modalService: BsModalService,
+              private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.createRegisterForm();
 
     if (this.isEdit) {
+      this.loadData();
+    }
+  }
+
+  loadData() {
+    this.employeeService.getEmployee(this.employeeId).subscribe((data: EmployeeForDetails) => {
+      this.employee = data;
+
       this.firstName.setValue(this.employee.firstName);
       this.lastName.setValue(this.employee.lastName);
-      this.birth.setValue(this.employee.birth);
+      this.birth.setValue(new Date(this.employee.birth));
       this.salary.setValue(this.employee.salary);
       this.workingPosition.setValue(this.employee.workingPosition);
       this.taxNumber.setValue(this.employee.taxNumber);
-    }
+    }, error => {
+      console.log(error);
+    });
   }
 
   get firstName() { return this.submitForm.get('firstName'); }

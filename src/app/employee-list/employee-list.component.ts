@@ -118,21 +118,9 @@ export class EmployeeListComponent implements OnInit {
   }
 
   editEmployee(id: number) {
-    // this.employeeService.getEmployee(id).subscribe((emp: EmployeeForDetails) => {
-    //   const initialState = {
-    //     isEdit: true,
-    //     employee: emp
-    //   };
-
-    //   this.bsModalRef = this.modalService.show(NewEmployeeModalComponent, { initialState });
-
-    // }, error => {
-    //   console.log(error);
-    // });
-
     const initialState = {
       isEdit: true,
-      employee: this.employeeService.getEmployee(id)
+      employeeId: id
     };
 
     this.bsModalRef = this.modalService.show(NewEmployeeModalComponent, {
@@ -141,23 +129,12 @@ export class EmployeeListComponent implements OnInit {
 
     this.bsModalRef.content.editedEmployee.subscribe(
       (editedEmployee: EmployeeForDetails) => {
-        // this.employeeService.addEmployee(newEmployee)subscribe((employees: EmployeeForList[]) => {
-        //   this.employees = employees;
-        // }, error => {
-        //   console.log(error);
-        // });
-        const emp: EmployeeForList = {
-          id: editedEmployee.id,
-          age: 10,
-          firstName: editedEmployee.firstName,
-          lastName: editedEmployee.lastName,
-          salary: editedEmployee.salary,
-          taxNumber: editedEmployee.taxNumber,
-          workingPosition: editedEmployee.workingPosition
-        };
-
-        const idx = this.employees.findIndex(x => x.id === emp.id);
-        this.employees[idx] = emp;
+        this.employeeService.updateEmployee(editedEmployee.id, editedEmployee).subscribe((data: EmployeeForList) => {
+          const idx = this.employees.findIndex(x => x.id === data.id);
+          this.employees[idx] = data;
+        }, error => {
+          console.log(error);
+        });
       }
     );
   }
