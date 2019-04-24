@@ -47,10 +47,8 @@ getEmployees(page?: number, itemsPerPage?: number, filterParams?: FilterParams):
       );
 }
 
-deleteEmployee(id: number): any {
-  this.employees = this.employees.filter(x => x.id !== id);
-
-  return this.employees;
+deleteEmployee(id: number) {
+  return this.http.delete(this.baseUrl + 'employees/' + id);
 }
 
 addEmployee(newEmployee: EmployeeForDetails) {
