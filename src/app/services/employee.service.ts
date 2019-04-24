@@ -26,9 +26,17 @@ getEmployees(page?: number, itemsPerPage?: number, filterParams?: FilterParams):
   }
 
   if (filterParams != null) {
-    params = params.append('lastNameFilter', filterParams.lastNameFilter);
-    params = params.append('taxNumberFilter', filterParams.taxNumberFilter);
-    params = params.append('workingPositionFilter', filterParams.workingPositionFilter);
+    if (filterParams.lastNameFilter !== '') {
+      params = params.append('lastNameFilter', filterParams.lastNameFilter);
+    }
+
+    if (filterParams.taxNumberFilter !== '') {
+      params = params.append('taxNumberFilter', filterParams.taxNumberFilter);
+    }
+
+    if (filterParams.workingPositionFilter !== '') {
+      params = params.append('workingPositionFilter', filterParams.workingPositionFilter);
+    }
   }
 
   const paginatedData: PaginatedData<EmployeeForList[]> = new PaginatedData<EmployeeForList[]>();
