@@ -56,19 +56,10 @@ addEmployee(newEmployee: EmployeeForDetails) {
 }
 
 getEmployee(id: number) {
-  const emp: EmployeeForList = this.employees.find(x => x.id === id);
-
-  const tmp: EmployeeForDetails = {
-    id: emp.id,
-    birth: new Date(),
-    firstName: emp.firstName,
-    lastName: emp.lastName,
-    salary: emp.salary,
-    taxNumber: emp.taxNumber,
-    workingPosition: emp.workingPosition
-  };
-
-  return tmp;
+  return this.http.get(this.baseUrl + 'employees/' + id);
 }
 
+updateEmployee(id: number, employeeToUpdate: EmployeeForDetails) {
+  return this.http.put(this.baseUrl + 'employees/' + id, employeeToUpdate);
+}
 }
