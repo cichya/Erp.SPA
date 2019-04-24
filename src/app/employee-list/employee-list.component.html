@@ -1,3 +1,32 @@
+<div class="mt-2 card">
+  <div class="card-header primary">Search</div>
+  <div class="card-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search()">
+      <div class="form-group row">
+        <label for="lastNameFilter" class="col-2 col-form-label">Last Name</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="lastNameFilter" formControlName="lastNameFilter" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="taxNumberFilter" class="col-2 col-form-label">Tax Number</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="taxNumberFilter" formControlName="taxNumberFilter" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="workingPositionFilter" class="col-2 col-form-label">Working Position</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="workingPositionFilter" formControlName="workingPositionFilter" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <button class="btn btn-secondary" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <button class="btn btn-info" (click)="addNewEmployee()">New</button>
 
 <div class="table-responsive">
@@ -17,20 +46,26 @@
     </thead>
     <tbody>
       <tr *ngFor="let employee of employees; let i = index">
-        <th class="align-middle" scope="row">{{ i + 1 }}</th>
-        <td>{{ employee.FirstName }}</td>
-        <td>{{ employee.LastName }}</td>
-        <td>{{ employee.Age }}</td>
-        <td>{{ employee.Salary }}</td>
-        <td>{{ employee.WorkingPosition }}</td>
-        <td>{{ employee.TaxNumber }}</td>
+        <td class="align-middle" scope="row">{{ i + 1 }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.age }}</td>
+        <td>{{ employee.salary }}</td>
+        <td>{{ employee.workingPosition }}</td>
+        <td>{{ employee.taxNumber }}</td>
         <td>
-          <button class="btn btn-info" (click)="editEmployee(employee.Id)">Edit</button>
+          <button class="btn btn-info" (click)="editEmployee(employee.id)">Edit</button>
         </td>
         <td>
-          <button class="btn btn-danger" (click)="deleteEmployee(employee.Id)">Delete</button>
+          <button class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+    [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+    firstText="&laquo;" lastText="&raquo;">
+  </pagination>
 </div>

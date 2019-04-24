@@ -1,3 +1,4 @@
+import { PaginatedData } from './../Models/Pagination';
 import { EmployeeForDetails } from './../Models/EmployeeForDetails';
 import { NewEmployeeModalComponent } from './../Modals/new-employee-modal/new-employee-modal.component';
 import { EmployeeService } from './../services/employee.service';
@@ -5,6 +6,9 @@ import { EmployeeForList } from './../Models/EmployeeForList';
 import { Component, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ConfirmDeleteUserComponent } from '../Modals/confirm-delete-user/confirm-delete-user.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Pagination } from '../Models/pagination';
+import { FilterParams } from '../Models/FilterParams';
 
 @Component({
   selector: 'app-employee-list',
@@ -14,14 +18,68 @@ import { ConfirmDeleteUserComponent } from '../Modals/confirm-delete-user/confir
 export class EmployeeListComponent implements OnInit {
   employees: EmployeeForList[];
   bsModalRef: BsModalRef;
+  searchForm: FormGroup;
+  pagination: Pagination;
+  filterParams: FilterParams;
+  currentPage = 1;
 
   constructor(
     private employeeService: EmployeeService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.employees = this.employeeService.getEmployees();
+    this.createSearchForm();
+    this.pagination = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalItems: 0,
+      totalPages: 0
+    };
+
+    this.searchForm.get('lastNameFilter').setValue('');
+    this.searchForm.get('taxNumberFilter').setValue('');
+    this.searchForm.get('workingPositionFilter').setValue('');
+
+    this.loadData();
+  }
+
+  createSearchForm() {
+    this.searchForm = this.fb.group({
+      lastNameFilter: [''],
+      taxNumberFilter: [''],
+      workingPositionFilter: ['']
+    });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadData();
+  }
+
+  loadData() {
+    this.employeeService
+      .getEmployees(this.pagination.currentPage, this.pagination.itemsPerPage, this.filterParams)
+      .subscribe(
+        (res: PaginatedData<EmployeeForList[]>) => {
+          this.employees = res.result;
+          this.pagination = res.pagination;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+  search() {
+    this.filterParams = {
+      lastNameFilter: this.searchForm.get('lastNameFilter').value,
+      taxNumberFilter: this.searchForm.get('taxNumberFilter').value,
+      workingPositionFilter: this.searchForm.get('workingPositionFilter').value
+    };
+
+    this.loadData();
   }
 
   deleteEmployee(id: number) {
@@ -35,7 +93,7 @@ export class EmployeeListComponent implements OnInit {
 
     this.bsModalRef.content.toDelete.subscribe((toDelete: boolean) => {
       if (toDelete) {
-        this.employees = this.employees.filter(x => x.Id !== id);
+        this.employees = this.employees.filter(x => x.id !== id);
       }
     });
   }
@@ -58,13 +116,13 @@ export class EmployeeListComponent implements OnInit {
         //   console.log(error);
         // });
         const emp: EmployeeForList = {
-          Id: this.employees[this.employees.length - 1].Id + 1,
-          Age: 10,
-          FirstName: newEmployee.FirstName,
-          LastName: newEmployee.LastName,
-          Salary: newEmployee.Salary,
-          TaxNumber: newEmployee.TaxNumber,
-          WorkingPosition: newEmployee.WorkingPosition
+          id: this.employees[this.employees.length - 1].id + 1,
+          age: 10,
+          firstName: newEmployee.firstName,
+          lastName: newEmployee.lastName,
+          salary: newEmployee.salary,
+          taxNumber: newEmployee.taxNumber,
+          workingPosition: newEmployee.workingPosition
         };
 
         this.employees.push(emp);
@@ -102,16 +160,16 @@ export class EmployeeListComponent implements OnInit {
         //   console.log(error);
         // });
         const emp: EmployeeForList = {
-          Id: editedEmployee.Id,
-          Age: 10,
-          FirstName: editedEmployee.FirstName,
-          LastName: editedEmployee.LastName,
-          Salary: editedEmployee.Salary,
-          TaxNumber: editedEmployee.TaxNumber,
-          WorkingPosition: editedEmployee.WorkingPosition
+          id: editedEmployee.id,
+          age: 10,
+          firstName: editedEmployee.firstName,
+          lastName: editedEmployee.lastName,
+          salary: editedEmployee.salary,
+          taxNumber: editedEmployee.taxNumber,
+          workingPosition: editedEmployee.workingPosition
         };
 
-        const idx = this.employees.findIndex(x => x.Id === emp.Id);
+        const idx = this.employees.findIndex(x => x.id === emp.id);
         this.employees[idx] = emp;
       }
     );
