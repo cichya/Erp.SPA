@@ -110,22 +110,11 @@ export class EmployeeListComponent implements OnInit {
 
     this.bsModalRef.content.newEmployee.subscribe(
       (newEmployee: EmployeeForDetails) => {
-        // this.employeeService.addEmployee(newEmployee)subscribe((employees: EmployeeForList[]) => {
-        //   this.employees = employees;
-        // }, error => {
-        //   console.log(error);
-        // });
-        const emp: EmployeeForList = {
-          id: this.employees[this.employees.length - 1].id + 1,
-          age: 10,
-          firstName: newEmployee.firstName,
-          lastName: newEmployee.lastName,
-          salary: newEmployee.salary,
-          taxNumber: newEmployee.taxNumber,
-          workingPosition: newEmployee.workingPosition
-        };
-
-        this.employees.push(emp);
+        this.employeeService.addEmployee(newEmployee).subscribe((employee: EmployeeForList) => {
+          this.employees.push(employee);
+        }, error => {
+          console.log(error);
+        });
       }
     );
   }
