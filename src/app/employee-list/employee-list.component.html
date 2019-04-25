@@ -1,0 +1,74 @@
+<div class="m-4 card">
+  <div class="card-header primary">Search</div>
+  <div class="card-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search()">
+      <div class="form-group row">
+        <label for="lastNameFilter" class="col-2 col-form-label">Last Name</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="lastNameFilter" formControlName="lastNameFilter" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="taxNumberFilter" class="col-2 col-form-label">Tax Number</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="taxNumberFilter" formControlName="taxNumberFilter" (keypress)="numberOnly($event)" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="workingPositionFilter" class="col-2 col-form-label">Working Position</label>
+        <div class="col-3">
+          <input type="text" class="form-control" id="workingPositionFilter" formControlName="workingPositionFilter" />
+        </div>
+      </div>
+      <div class="form-group row">
+          <label for="workingPositionFilter" class="col-2 col-form-label">&nbsp;</label>
+          <div class="col-3">
+            <button class="btn btn-primary searchBtn" type="submit">Search</button>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="text-center">
+  <button class="btn btn-success btn-lg" (click)="addNewEmployee()">Add Employee</button>
+</div>
+<div class="m-4 table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Salary</th>
+        <th scope="col">Working Position</th>
+        <th scope="col">Tax Number</th>
+        <th scope="col">&nbsp;</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees; let i = index">
+        <td class="align-middle" scope="row">{{ i + 1 }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.age }}</td>
+        <td>{{ employee.salary | currency }}</td>
+        <td>{{ employee.workingPosition }}</td>
+        <td>{{ employee.taxNumber }}</td>
+        <td>
+          <button class="crudBtn btn btn-info" (click)="editEmployee(employee.id)">Edit</button>
+        </td>
+        <td>
+          <button class="crudBtn btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+    [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+    firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+</div>
