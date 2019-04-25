@@ -5,5 +5,5 @@ export interface EmployeeForList {
   age: number;
   salary: number;
   workingPosition: string;
-  taxNumber: number;
+  taxNumber: string;
 }
