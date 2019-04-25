@@ -5,5 +5,5 @@ export interface EmployeeForDetails {
   birth: Date;
   salary: number;
   workingPosition: string;
-  taxNumber: number;
+  taxNumber: string;
 }
